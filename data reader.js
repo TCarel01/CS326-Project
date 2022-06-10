@@ -25,5 +25,17 @@ class dataReader {
     }
 
 
-
+    //takes as input the time and converts it to the time in total milliseconds
+    //convertStrToMS(time: str): number
+    convertStrToMS(time){
+        let timeArr = time.split(/[:.]+/);
+        let timeList = [];
+        timeList.push(parseInt(timeArr[0]) * 60000);
+        timeList.push(parseInt(timeArr[1]) * 1000);
+        timeList.push(parseInt(timeArr[2]) * 100);
+        timeList.push(parseInt(timeArr[3]) * 10);
+        timeList.push(parseInt(timeArr[4]));
+        let totalMS = timeList.reduce((acc, e) => acc += e, 0);
+        return totalMS;
+    }
 }
