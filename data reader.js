@@ -45,12 +45,13 @@ class dataReader {
             returnStr += '-';
             timeDifference *= -1;
         }
-        let msDif = timeDifference % 1000;
+        let msDif = Math.floor(timeDifference % 1000);
         Math.floor(timeDifference /= 1000);
-        let secDif = timeDifference % 60;
+        let secDif = Math.floor((timeDifference % 60));
         Math.floor(timeDifference /= 60);
-        let minDif = timeDifference;
-        returnStr += `${minDif}` + ':' + `${secDif}` + '.' + `${msDif}`
+        let minDif = Math.floor(timeDifference);
+        returnStr += `${minDif}`.padStart(1, "0") + ':' + `${secDif}`.padStart(2, "0") + '.' + `${msDif}`.padStart(3, "0");
+        return returnStr;
     }
 }
 
@@ -58,4 +59,4 @@ let a = new dataReader();
 console.assert(a.convertStrToMS("1:43.724") === 103724);
 a.addPlayerTime(1, {track: "MH", time: "1:43.724"});
 a.addPlayerTime(2, {track: "MH", time: "1:43.725"});
-console.assert(a.compareTimes("1:43.724", "1:43.725") === '-:.001');
+console.assert(a.compareTimes("MH", "time") === '-0:00.001');
