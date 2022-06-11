@@ -34,6 +34,9 @@ export class dataReader {
     //compares two player times and returns a string presenting the time difference between the two players
     //compareTimes(track: str, split: str): String
     compareTimes(track, split){
+        if (!track in this.player1Times || !track in this.player2Times){
+            return "at least one player does not have a time here";
+        }
         let p1Time = this.convertStrToMS(this.player1Times[track][split]);
         let p2Time = this.convertStrToMS(this.player2Times[track][split]);
         let timeDifference = p1Time - p2Time;
