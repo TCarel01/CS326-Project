@@ -3,6 +3,7 @@ export class dataReader {
     constructor(){
         this.player1Times = {};
         this.player2Times = {};
+        this.trackList = {};
     }
 
 
@@ -10,6 +11,9 @@ export class dataReader {
     //addPlayerTime(player: number, input: {track: str, time: str, lap1: str, lap2: str, lap3: str}):
     addPlayerTime(player, input) {
         let curTrack = input.track;
+        if (!(curTrack in this.trackList)){
+            this.trackList[curTrack] = undefined;
+        }
         if (player === 1){
             this.player1Times[curTrack] = {time: input.time, lap1: null, lap2: null, lap3: null};
         }
@@ -34,7 +38,7 @@ export class dataReader {
     //compares two player times and returns a string presenting the time difference between the two players
     //compareTimes(track: str, split: str): String
     compareTimes(track, split){
-        if (!track in this.player1Times || !track in this.player2Times){
+        if (!(track in this.player1Times) && !(track in this.player2Times)){
             return "at least one player does not have a time here";
         }
         let p1Time = this.convertStrToMS(this.player1Times[track][split]);
@@ -48,6 +52,9 @@ export class dataReader {
             returnStr += '-';
             timeDifference *= -1;
         }
+        else {
+            returnStr += "+";
+        }
         let msDif = Math.floor(timeDifference % 1000);
         Math.floor(timeDifference /= 1000);
         let secDif = Math.floor((timeDifference % 60));
@@ -55,6 +62,15 @@ export class dataReader {
         let minDif = Math.floor(timeDifference);
         returnStr += `${minDif}`.padStart(1, "0") + ':' + `${secDif}`.padStart(2, "0") + '.' + `${msDif}`.padStart(3, "0");
         return returnStr;
+    }
+
+    //inserts a new option to select in the drop down menu, to be called in an eventListener
+    //insertTrack(track: str):
+    insertTrack(track){
+        if (!(track in this.trackList)){
+            let element = document.getElementById("track");
+            element.insertAdjacentHTML("beforeend", "<option value="+ track + ">" + track + "</option>");
+        }
     }
 }
 

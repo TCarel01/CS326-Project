@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>html test file</title>
+    </head>
+    <script type="module" src="data reader.js"></script>
+    <script type="module" src="main.js"></script>
+    <body> 
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        <label for="p1Input">Player:</label>
+                        &nbsp;
+                        <select name="player" id="player">
+                            <option value="Player 1">Player 1</option>
+                            <option value = "Player 2">Player 2</option>
+                        </select>
+                    </td>
+                    <td><label for="trackInput">&nbsp; Track: </label><input type="text" id="trackInput" /></td>
+                    <td><label for="time">&nbsp; Time: </label><input type = "text" id="time" /></td>
+                    <td><input type="button" id="submit-button" value="Submit" /></td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    <td>
+                        <select name="trackCompare" id="track">
+                            <option value="---">---</option>
+                        </select>
+                    </td>
+                    <td><label for="difference">&nbsp; Difference: </label><input type="text" id="diffOutput" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <label for="disclaimer">&nbsp; Please enter times in the format x:yy:zzz where x is between 0 and 9, y is between 0 and 9, and z is between 0 and 9. 
+                        Ghosts in mario kart wii have a maximum time of 5:59.999 so a time cannot have a minute of greater than or equal to 6.</label>
+                </tr>
+            </table>
+        </form>          
+    </body>
+</html>
