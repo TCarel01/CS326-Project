@@ -1,4 +1,4 @@
-class dataReader {
+export class dataReader {
 
     constructor(){
         this.player1Times = {};
