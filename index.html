@@ -3,6 +3,7 @@
         <title>html test file</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link rel="stylesheet" href="main.css" />
     </head>
     <!-- <script type="module" src="data reader.js"></script> -->
     <script type="module" src="main.js"></script>
@@ -22,6 +23,9 @@
                     </td>
                     <td><label for="trackInput">&nbsp; Track: </label><input type="text" id="trackInput" /></td>
                     <td><label for="time">&nbsp; Time: </label><input type = "text" id="time" /></td>
+                    <td><label for="split1">&nbsp; Lap 1: &nbsp;</label><input type = "text" id="split1" />&nbsp;</td>
+                    <td><label for="split2">&nbsp; Lap 2: &nbsp;</label><input type = "text" id="split2" />&nbsp;</td>
+                    <td><label for="split3">&nbsp; Lap 3: &nbsp;</label><input type = "text" id="split3" />&nbsp;</td>
                     <td><input type="button" id="submit-button" value="Submit" /></td>
                     <td><input type="file" id="file" value="Choose Ghost File"/></td>
                 </tr>
@@ -34,6 +38,15 @@
                             <option value="---">---</option>
                         </select>
                     </td>
+                </tr>
+                <tr>
+                    <td><label for="comparison"> &nbsp; Comparison Ghost: </label><input type="file" id="rivalGhost" value="Rival Ghost File: "></td>
+                    <td><label for='rivalTrackInput'>&nbsp; Track: </label><input type='text' id='rivalTrackInput' /></td>
+                    <td><label for="rivalTime">&nbsp; Time: </label><input type = "text" id="rivalTime" /></td>
+                    <td><label for="rivalSplit1">&nbsp; Lap 1: &nbsp;</label><input type = "text" id="rivalSplit1" />&nbsp;</td>
+                    <td><label for="rivalSplit2">&nbsp; Lap 2: &nbsp;</label><input type = "text" id="rivalSplit2" />&nbsp;</td>
+                    <td><label for="rivalSplit3">&nbsp; Lap 3: &nbsp;</label><input type = "text" id="rivalSplit3" />&nbsp;</td>
+                    <td><input type="button" id="rival-submit-button" value="Submit" /></td>
                 </tr>
             </table>
         </form>    

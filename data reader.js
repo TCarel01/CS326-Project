@@ -3,14 +3,22 @@ export class dataReader {
     constructor(){
         this.player1Times = {};
         this.player2Times = {};
-        this.trackList = {Mushroom: {'Luigi Circuit': null, "Moo Moo Meadows": null, 'Mushroom Gorge': null, "Toad's Factory": null},
-                            Flower: {'Mario Circuit': null, "Coconut Mall": null, "DK Summit": null, "Wario's Gold Mine": null},
-                            Star: {'Daisy Circuit': null, 'Koopa Cape': null, 'Maple Treeway': null, 'Grumble Volcano': null},
-                            Special: {'Dry Dry Ruins': null, 'Moonview Highway': null, "Bowser's Castle": null, "Rainbow Road": null},
-                            Shell: {'GCN Peach Beach': null, 'DS Yoshi Falls': null, 'SNES Ghost Valley 2': null, 'N64 Mario Raceway': null},
-                            Banana: {'N64 Sherbet Land': null, 'GBA Shy Guy Beach': null, 'DS Delfino Square': null, 'GCN Waluigi Stadium': null},
-                            Leaf: {'DS Desert Hills': null, 'GBA Bowser Castle 3': null, "N64 DK's Jungle Parkway": null, 'GCN Mario Circuit': null},
-                            Lightning: {'SNES Mario Circuit 3': null, 'DS Peach Gardens': null, 'GCN DK Mountain': null, "N64 Bowser's Castle": null}};
+        this.trackList = {Mushroom: {'Luigi Circuit': {time: null, split1: null, split2: null, split3: null}, "Moo Moo Meadows": {time: null, split1: null, split2: null, split3: null}, 
+                            'Mushroom Gorge': {time: null, split1: null, split2: null, split3: null}, "Toad's Factory": {time: null, split1: null, split2: null, split3: null}},
+                            Flower: {'Mario Circuit': {time: null, split1: null, split2: null, split3: null}, "Coconut Mall": {time: null, split1: null, split2: null, split3: null},
+                             "DK Summit": {time: null, split1: null, split2: null, split3: null}, "Wario's Gold Mine": {time: null, split1: null, split2: null, split3: null}},
+                            Star: {'Daisy Circuit': {time: null, split1: null, split2: null, split3: null}, 'Koopa Cape': {time: null, split1: null, split2: null, split3: null}, 
+                            'Maple Treeway': {time: null, split1: null, split2: null, split3: null}, 'Grumble Volcano': {time: null, split1: null, split2: null, split3: null}},
+                            Special: {'Dry Dry Ruins': {time: null, split1: null, split2: null, split3: null}, 'Moonview Highway': {time: null, split1: null, split2: null, split3: null}, 
+                            "Bowser's Castle": {time: null, split1: null, split2: null, split3: null}, "Rainbow Road": {time: null, split1: null, split2: null, split3: null}},
+                            Shell: {'GCN Peach Beach': {time: null, split1: null, split2: null, split3: null}, 'DS Yoshi Falls': {time: null, split1: null, split2: null, split3: null},
+                             'SNES Ghost Valley 2': {time: null, split1: null, split2: null, split3: null}, 'N64 Mario Raceway': {time: null, split1: null, split2: null, split3: null}},
+                            Banana: {'N64 Sherbet Land': {time: null, split1: null, split2: null, split3: null}, 'GBA Shy Guy Beach': {time: null, split1: null, split2: null, split3: null},
+                             'DS Delfino Square': {time: null, split1: null, split2: null, split3: null}, 'GCN Waluigi Stadium': {time: null, split1: null, split2: null, split3: null}},
+                            Leaf: {'DS Desert Hills': {time: null, split1: null, split2: null, split3: null}, 'GBA Bowser Castle 3': {time: null, split1: null, split2: null, split3: null},
+                             "N64 DK's Jungle Parkway": {time: null, split1: null, split2: null, split3: null}, 'GCN Mario Circuit': {time: null, split1: null, split2: null, split3: null}},
+                            Lightning: {'SNES Mario Circuit 3': {time: null, split1: null, split2: null, split3: null}, 'DS Peach Gardens': {time: null, split1: null, split2: null, split3: null}, 
+                            'GCN DK Mountain': {time: null, split1: null, split2: null, split3: null}, "N64 Bowser's Castle": {time: null, split1: null, split2: null, split3: null}}};
         this.trackIDObj = {0x08: "Luigi Circuit", 0x01: 'Moo Moo Meadows', 0x02: 'Mushroom Gorge', 0x04: "Toad's Factory",
                             0x00: "Mario Circuit", 0x05: 'Coconut Mall', 0x06: 'DK Summit', 0x07: "Wario's Gold Mine",
                             0x09: 'Daisy Circuit', 0x0F: 'Koopa Cape', 0x0B: 'Maple Treeway', 0x03: 'Grumble Volcano',
@@ -29,13 +37,14 @@ export class dataReader {
         for (let cup in this.trackList){
             if (input.track in this.trackList[cup]){
                 found = true;
-                if (!this.trackList[cup][input.track]){
-                    if (this.checkValidFormat(input.time)){
-                        this.trackList[cup][input.track] = input.time;
-                    }
-                    else {
-                        alert('Please use a valid time format');
-                    }
+                if (this.checkValidFormat(input.time)){
+                    this.trackList[cup][input.track].time = input.time;
+                    this.trackList[cup][input.track].split1 = input.lap1;
+                    this.trackList[cup][input.track].split2 = input.lap2;
+                    this.trackList[cup][input.track].split3 = input.lap3;
+                }
+                else {
+                    alert('Please use a valid time format');
                 }
             }
         }
@@ -137,15 +146,28 @@ export class dataReader {
             alert('this is not a valid ghost file');
             return;
         }
-        let hexArr = relevantData.map(function(char){
+        let hexArr = inputArr.map(function(char){
             return char.charCodeAt(0);
         });
+        function timeParser(bitArr) {
+            let totalMinutes = bitArr[0] >> 1;
+            let totalSeconds = ((bitArr[0] & 1) << 1) + (bitArr[1] >> 2);
+            let totalMS = ((bitArr[1] & 3) << 8) + bitArr[2];
+            return `${totalMinutes}` + ':' + `${totalSeconds}`.padStart(2, '0') + '.' + `${totalMS}`.padStart(3, '0');
+        }
         let totalMinutes = hexArr[4] >> 1;
         let totalSeconds = ((hexArr[4] & 1) << 1) + (hexArr[5] >> 2);
         let totalMS = ((hexArr[5] & 3) << 8) + hexArr[6];
         document.getElementById('time').value = `${totalMinutes}` + ':' + `${totalSeconds}`.padStart(2, '0') + '.' + `${totalMS}`.padStart(3, '0');
         let track = ((hexArr[7] >> 2) & 63);
         document.getElementById('trackInput').value = this.trackIDObj[track];
+        let l1 = timeParser(hexArr.slice(17, 20));
+        let l2 = timeParser(hexArr.slice(20, 23));
+        let l3 = timeParser(hexArr.slice(23, 26));
+        document.getElementById('split1').value = l1;
+        document.getElementById('split2').value = l2;
+        document.getElementById('split3').value = l3;
+
     }
 
     //renders all the listed tracks in a grid layout
@@ -166,21 +188,28 @@ export class dataReader {
             newCup.classList.add('col-sm-6');
             newCup.classList.add('col-md-6');
             newCup.classList.add('col-lg-6');
+            newCup.classList.add('normal-cursor');
             //newCup.classList.add('border');
             for (let track in this.trackList[cup]){
                 let newTrack = document.createElement('div');
                 newTrack.id = track;
                 newTrack.classList.add('row');
+                newTrack.classList.add('entry');
                 //newTrack.classList.add('border');
                 newCup.appendChild(newTrack);
                 let trackName = document.createElement('div');
                 trackName.classList.add('border');
                 trackName.classList.add('col');
+                trackName.classList.add('normal-cursor');
                 trackName.innerText = track;
                 let time = document.createElement('div');
                 time.classList.add('border');
                 time.classList.add('col');
-                time.innerText = this.trackList[cup][track];
+                time.classList.add('normal-cursor');
+                time.innerText = (this.trackList[cup][track].time ? 'Time: ' + this.trackList[cup][track].time + "\u00A0": '') + 
+                (this.trackList[cup][track].split1 ? 'Lap 1: ' + this.trackList[cup][track].split1 + "\u00A0" : '') + 
+                (this.trackList[cup][track].split2 ? 'Lap 2: ' + this.trackList[cup][track].split2 + "\u00A0": '') +
+                (this.trackList[cup][track].split3 ? 'Lap 3: ' + this.trackList[cup][track].split3 : '');
                 newTrack.appendChild(trackName);
                 newTrack.appendChild(time);
             }
@@ -194,4 +223,3 @@ let a = new dataReader();
 console.assert(a.convertStrToMS("1:43.724") === 103724);
 a.addPlayerTime(1, {track: "MH", time: "1:43.724"});
 a.addPlayerTime(2, {track: "MH", time: "1:43.725"});
-console.assert(a.compareTimes("MH", "time") === '-0:00.001');

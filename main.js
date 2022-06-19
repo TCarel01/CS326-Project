@@ -10,8 +10,11 @@ curReader.render(document.getElementById('track-display'));
 submit.addEventListener("click", function(event){
     let trackName = document.getElementById("trackInput").value;
     let time = document.getElementById("time").value;
+    let lap1 = document.getElementById('split1').value === "" ? undefined : document.getElementById('split1').value;
+    let lap2 = document.getElementById('split2').value === "" ? undefined : document.getElementById('split2').value;
+    let lap3 = document.getElementById('split3').value === "" ? undefined : document.getElementById('split3').value;
     curReader.insertTrack(trackName);
-    curReader.addPlayerTime({track: trackName, time: time});
+    curReader.addPlayerTime({track: trackName, time: time, lap1: lap1, lap2: lap2, lap3: lap3});
     if (selectMenu.value === trackName){
         changeDiff();
     }
