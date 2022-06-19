@@ -15,18 +15,56 @@ export class dataReader {
 
 
     //current adds a time to the object with list of playerTimes taking an object as input with certain fields filled in
-    //addPlayerTime(player: number, input: {track: str, time: str, lap1: str, lap2: str, lap3: str}):
-    addPlayerTime(player, input) {
-        let curTrack = input.track;
-        if (!(curTrack in this.trackList)){
-            this.trackList[curTrack] = undefined;
+    //addPlayerTime(input: {track: str, time: str, lap1: str, lap2: str, lap3: str}):
+    addPlayerTime(input) {
+        let found = false;
+        for (let cup in this.trackList){
+            if (input.track in this.trackList[cup]){
+                found = true;
+                if (!this.trackList[cup][input.track]){
+                    if (this.checkValidFormat(input.time)){
+                        this.trackList[cup][input.track] = input.time;
+                    }
+                    else {
+                        alert('Please use a valid time format');
+                    }
+                }
+            }
         }
-        if (player === 1){
-            this.player1Times[curTrack] = {time: input.time, lap1: null, lap2: null, lap3: null};
+    }
+
+    //checks if the input for a player time is in a valid format
+    //checkValidFormat(time: str): Boolean
+    checkValidFormat(time){
+        let timeArr = time.split('');
+        if (timeArr.indexOf(':') !== -1){
+            for (let index = 0; index < timeArr.length; ++index){
+                if (timeArr[index] === ':'){
+                    if (index !== 1){
+                        return false;
+                    }
+                }
+                else if (timeArr[index] === '.'){
+                    if (index !== 4){
+                        return false;
+                    }
+                }
+                else if (timeArr[index].charCodeAt(0) < '0'.charCodeAt(0) || timeArr[index].charCodeAt(0) > '9'.charCodeAt(0)) {
+                        return false;
+                    }
+                }
+            }
+        else {
+            for (let index = 0; index < timeArr.length; ++index){
+                if (index === 3 && timeArr[index] !== '.'){
+                    return false;
+                }
+                else if (timeArr[index].charCodeAt(0) < '0'.charCodeAt(0) || timeArr[index].charCodeAt(0) > '9'.charCodeAt(0)){
+                    return false;
+                }
+            }
         }
-        else if (player === 2) {
-            this.player2Times[curTrack] = {time: input.time, lap1: null, lap2: null, lap3: null};
-        }
+        return true;
     }
 
 
@@ -83,14 +121,14 @@ export class dataReader {
     //renders all the listed tracks in a grid layout
     //render(element: document tag): 
     render(element){
+        element.innerHTML = '';
         let counter = 0;
         let newRow = undefined;
         for (let cup in this.trackList){
             if (counter % 4 === 0) {
                 newRow = document.createElement('div');
                 newRow.classList.add('row');
-                newRow.classList.add('border-left');
-                newRow.classList.add('border-top');
+                // newRow.classList.add('border');
                 element.appendChild(newRow);
             }
             const newCup = document.createElement('div');
@@ -106,11 +144,11 @@ export class dataReader {
                 //newTrack.classList.add('border');
                 newCup.appendChild(newTrack);
                 let trackName = document.createElement('div');
-                //trackName.classList.add('border');
+                trackName.classList.add('border');
                 trackName.classList.add('col');
                 trackName.innerText = track;
                 let time = document.createElement('div');
-                //time.classList.add('border');
+                time.classList.add('border');
                 time.classList.add('col');
                 time.innerText = this.trackList[cup][track];
                 newTrack.appendChild(trackName);

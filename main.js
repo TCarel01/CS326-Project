@@ -12,10 +12,11 @@ submit.addEventListener("click", function(event){
     let time = document.getElementById("time").value;
     let player = document.getElementById("player").value === "Player 1" ? 1 : 2;
     curReader.insertTrack(trackName);
-    curReader.addPlayerTime(player, {track: trackName, time: time});
+    curReader.addPlayerTime({track: trackName, time: time});
     if (selectMenu.value === trackName){
         changeDiff();
     }
+    curReader.render(document.getElementById('track-display'));
 });
 
 selectMenu.addEventListener("change", changeDiff);
