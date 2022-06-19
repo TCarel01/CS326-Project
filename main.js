@@ -4,6 +4,7 @@ const curReader = new dataReader();
 
 
 const submit = document.getElementById("submit-button");
+const rivalSubmit = document.getElementById('rival-submit-button');
 const selectMenu = document.getElementById("track");
 curReader.render(document.getElementById('track-display'));
 
@@ -19,6 +20,16 @@ submit.addEventListener("click", function(event){
         changeDiff();
     }
     curReader.render(document.getElementById('track-display'));
+});
+
+rivalSubmit.addEventListener('click', function(event) {
+    let trackName = document.getElementById('rivalTrackInput').value;
+    let time = document.getElementById('rivalTime').value;
+    let lap1 = document.getElementById('rivalSplit1').value;
+    let lap2 = document.getElementById('rivalSplit2').value;
+    let lap3 = document.getElementById('rivalSplit3').value;
+    let difference = curReader.compareTimes({track: trackName, time: time, lap1: lap1, lap2: lap2, lap3: lap3});
+    document.getElementById('diffOutput').value = difference;
 });
 
 selectMenu.addEventListener("change", changeDiff);

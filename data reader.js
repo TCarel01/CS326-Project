@@ -26,7 +26,11 @@ export class dataReader {
                             0x10: 'GCN Peach Beach', 0x14: 'DS Yoshi Falls', 0x19: 'SNES Ghost Valley 2', 0x1A: 'N64 Mario Raceway',
                             0x1B: 'N64 Sherbet Land', 0x1F: 'GBA Shy Guy Beach', 0x17: 'DS Delfino Square', 0x12: 'GCN Waluigi Stadium',
                             0x15: 'DS Desert Hills', 0x1E: 'GBA Bowser Castle 3', 0x1D: "N64 DK's Jungle Parkway", 0x11: 'GCN Mario Circuit',
-                            0x18: 'SNES Mario Circuit 3', 0x16: 'DS Peach Gardens', 0x13: 'GCN DK Mountain', 0x1C: "N64 Bowser's Castle"}
+                            0x18: 'SNES Mario Circuit 3', 0x16: 'DS Peach Gardens', 0x13: 'GCN DK Mountain', 0x1C: "N64 Bowser's Castle"};
+        if (window.localStorage.getItem('trackList')){
+            this.trackList = JSON.parse(window.localStorage.getItem('trackList')).list;
+        }
+        window.localStorage.setItem('trackList', JSON.stringify({list: this.trackList}));
     }
 
 
@@ -42,6 +46,7 @@ export class dataReader {
                     this.trackList[cup][input.track].split1 = input.lap1;
                     this.trackList[cup][input.track].split2 = input.lap2;
                     this.trackList[cup][input.track].split3 = input.lap3;
+                    window.localStorage.setItem('trackList', JSON.stringify({list: this.trackList}));
                 }
                 else {
                     alert('Please use a valid time format');
@@ -98,32 +103,40 @@ export class dataReader {
     }
 
     //compares two player times and returns a string presenting the time difference between the two players
-    //compareTimes(track: str, split: str): String
-    compareTimes(track, split){
-        if (!(track in this.player1Times) && !(track in this.player2Times)){
-            return "at least one player does not have a time here";
+    //compareTimes(input: {track: string, time: string, lap1: string, lap2: string, lap3: string}): String
+    compareTimes(input){
+        for (let cup in this.trackList){
+            if (input.track in this.trackList[cup]){
+                if (this.trackList[cup][input.track].time === null){
+                    return "Player does not have a completed time on this track";
+                }
+                let p1Time = this.convertStrToMS(this.trackList[cup][input.track].time);
+                let p2Time = this.convertStrToMS(input.time);
+                let timeDifference = p1Time - p2Time;
+                let returnStr = ''
+                if (timeDifference === 0){
+                    document.getElementById('diffOutput').classList.value = 'neutralDifference';
+                    return '0.000';
+                }
+                else if (timeDifference < 0){
+                    returnStr += '-';
+                    timeDifference *= -1;
+                    document.getElementById('diffOutput').classList.value = 'fastDifference';
+                }
+                else {
+                    returnStr += "+";
+                    document.getElementById('diffOutput').classList.value = 'slowDifference';
+                }
+                let msDif = Math.floor(timeDifference % 1000);
+                Math.floor(timeDifference /= 1000);
+                let secDif = Math.floor((timeDifference % 60));
+                Math.floor(timeDifference /= 60);
+                let minDif = Math.floor(timeDifference);
+                returnStr += `${minDif}`.padStart(1, "0") + ':' + `${secDif}`.padStart(2, "0") + '.' + `${msDif}`.padStart(3, "0");
+                return returnStr;
+            }
         }
-        let p1Time = this.convertStrToMS(this.player1Times[track][split]);
-        let p2Time = this.convertStrToMS(this.player2Times[track][split]);
-        let timeDifference = p1Time - p2Time;
-        let returnStr = ''
-        if (timeDifference === 0){
-            return '0.000';
-        }
-        else if (timeDifference < 0){
-            returnStr += '-';
-            timeDifference *= -1;
-        }
-        else {
-            returnStr += "+";
-        }
-        let msDif = Math.floor(timeDifference % 1000);
-        Math.floor(timeDifference /= 1000);
-        let secDif = Math.floor((timeDifference % 60));
-        Math.floor(timeDifference /= 60);
-        let minDif = Math.floor(timeDifference);
-        returnStr += `${minDif}`.padStart(1, "0") + ':' + `${secDif}`.padStart(2, "0") + '.' + `${msDif}`.padStart(3, "0");
-        return returnStr;
+        return 'Player does not have a completed time on this track';        
     }
 
     //inserts a new option to select in the drop down menu, to be called in an eventListener
