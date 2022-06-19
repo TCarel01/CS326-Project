@@ -11,6 +11,14 @@ export class dataReader {
                             Banana: {'N64 Sherbet Land': null, 'GBA Shy Guy Beach': null, 'DS Delfino Square': null, 'GCN Waluigi Stadium': null},
                             Leaf: {'DS Desert Hills': null, 'GBA Bowser Castle 3': null, "N64 DK's Jungle Parkway": null, 'GCN Mario Circuit': null},
                             Lightning: {'SNES Mario Circuit 3': null, 'DS Peach Gardens': null, 'GCN DK Mountain': null, "N64 Bowser's Castle": null}};
+        this.trackIDObj = {0x08: "Luigi Circuit", 0x01: 'Moo Moo Meadows', 0x02: 'Mushroom Gorge', 0x04: "Toad's Factory",
+                            0x00: "Mario Circuit", 0x05: 'Coconut Mall', 0x06: 'DK Summit', 0x07: "Wario's Gold Mine",
+                            0x09: 'Daisy Circuit', 0x0F: 'Koopa Cape', 0x0B: 'Maple Treeway', 0x03: 'Grumble Volcano',
+                            0x0E: 'Dry Dry Ruins', 0x0A: 'Moonview Highway', 0x0C: "Bowser's Castle", 0x0D: 'Rainbow Road',
+                            0x10: 'GCN Peach Beach', 0x14: 'DS Yoshi Falls', 0x19: 'SNES Ghost Valley 2', 0x1A: 'N64 Mario Raceway',
+                            0x1B: 'N64 Sherbet Land', 0x1F: 'GBA Shy Guy Beach', 0x17: 'DS Delfino Square', 0x12: 'GCN Waluigi Stadium',
+                            0x15: 'DS Desert Hills', 0x1E: 'GBA Bowser Castle 3', 0x1D: "N64 DK's Jungle Parkway", 0x11: 'GCN Mario Circuit',
+                            0x18: 'SNES Mario Circuit 3', 0x16: 'DS Peach Gardens', 0x13: 'GCN DK Mountain', 0x1C: "N64 Bowser's Castle"}
     }
 
 
@@ -133,10 +141,11 @@ export class dataReader {
             return char.charCodeAt(0);
         });
         let totalMinutes = hexArr[4] >> 1;
-        let test = hexArr[4] << 31;
         let totalSeconds = ((hexArr[4] & 1) << 1) + (hexArr[5] >> 2);
         let totalMS = ((hexArr[5] & 3) << 8) + hexArr[6];
         document.getElementById('time').value = `${totalMinutes}` + ':' + `${totalSeconds}`.padStart(2, '0') + '.' + `${totalMS}`.padStart(3, '0');
+        let track = ((hexArr[7] >> 2) & 63);
+        document.getElementById('trackInput').value = this.trackIDObj[track];
     }
 
     //renders all the listed tracks in a grid layout

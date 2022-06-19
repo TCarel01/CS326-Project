@@ -10,7 +10,6 @@ curReader.render(document.getElementById('track-display'));
 submit.addEventListener("click", function(event){
     let trackName = document.getElementById("trackInput").value;
     let time = document.getElementById("time").value;
-    let player = document.getElementById("player").value === "Player 1" ? 1 : 2;
     curReader.insertTrack(trackName);
     curReader.addPlayerTime({track: trackName, time: time});
     if (selectMenu.value === trackName){
