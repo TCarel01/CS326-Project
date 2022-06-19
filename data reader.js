@@ -133,9 +133,9 @@ export class dataReader {
             }
             const newCup = document.createElement('div');
             newCup.innerText = cup;
-            newCup.classList.add('col-sm-3');
-            newCup.classList.add('col-md-3');
-            newCup.classList.add('col-lg-3');
+            newCup.classList.add('col-sm-6');
+            newCup.classList.add('col-md-6');
+            newCup.classList.add('col-lg-6');
             //newCup.classList.add('border');
             for (let track in this.trackList[cup]){
                 let newTrack = document.createElement('div');
