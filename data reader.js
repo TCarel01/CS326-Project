@@ -118,6 +118,27 @@ export class dataReader {
         }
     }
 
+    //reads the standard data from an RKG file
+    //parseRKG(input: Binary String)
+    parseRKG(input){
+        let inputArr = input.split('');
+        let relevantData = inputArr.slice(0, 8);
+        let fileTypeArr = relevantData.slice(0, 4);
+        let fileTypeCheck = fileTypeArr.join('');
+        if (fileTypeCheck !== 'RKGD'){
+            alert('this is not a valid ghost file');
+            return;
+        }
+        let hexArr = relevantData.map(function(char){
+            return char.charCodeAt(0);
+        });
+        let totalMinutes = hexArr[4] >> 1;
+        let test = hexArr[4] << 31;
+        let totalSeconds = ((hexArr[4] & 1) << 1) + (hexArr[5] >> 2);
+        let totalMS = ((hexArr[5] & 3) << 8) + hexArr[6];
+        document.getElementById('time').value = `${totalMinutes}` + ':' + `${totalSeconds}`.padStart(2, '0') + '.' + `${totalMS}`.padStart(3, '0');
+    }
+
     //renders all the listed tracks in a grid layout
     //render(element: document tag): 
     render(element){

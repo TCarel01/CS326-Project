@@ -35,3 +35,14 @@ function changeDiff() {
         diffOutput.style.color = 'red';
     }
 }
+
+const file = document.getElementById('file');
+
+file.addEventListener('change', function(event){
+    console.log(file.files);
+    const reader = new FileReader();
+    reader.onload = function () {
+        curReader.parseRKG(reader.result);
+    }
+    reader.readAsBinaryString(file.files[0]);
+});
