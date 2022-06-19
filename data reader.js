@@ -3,7 +3,14 @@ export class dataReader {
     constructor(){
         this.player1Times = {};
         this.player2Times = {};
-        this.trackList = {};
+        this.trackList = {Mushroom: {'Luigi Circuit': null, "Moo Moo Meadows": null, 'Mushroom Gorge': null, "Toad's Factory": null},
+                            Flower: {'Mario Circuit': null, "Coconut Mall": null, "DK Summit": null, "Wario's Gold Mine": null},
+                            Star: {'Daisy Circuit': null, 'Koopa Cape': null, 'Maple Treeway': null, 'Grumble Volcano': null},
+                            Special: {'Dry Dry Ruins': null, 'Moonview Highway': null, "Bowser's Castle": null, "Rainbow Road": null},
+                            Shell: {'GCN Peach Beach': null, 'DS Yoshi Falls': null, 'SNES Ghost Valley 2': null, 'N64 Mario Raceway': null},
+                            Banana: {'N64 Sherbet Land': null, 'GBA Shy Guy Beach': null, 'DS Delfino Square': null, 'GCN Waluigi Stadium': null},
+                            Leaf: {'DS Desert Hills': null, 'GBA Bowser Castle 3': null, "N64 DK's Jungle Parkway": null, 'GCN Mario Circuit': null},
+                            Lightning: {'SNES Mario Circuit 3': null, 'DS Peach Gardens': null, 'GCN DK Mountain': null, "N64 Bowser's Castle": null}};
     }
 
 
@@ -70,6 +77,47 @@ export class dataReader {
         if (!(track in this.trackList)){
             let element = document.getElementById("track");
             element.insertAdjacentHTML("beforeend", "<option value="+ track + ">" + track + "</option>");
+        }
+    }
+
+    //renders all the listed tracks in a grid layout
+    //render(element: document tag): 
+    render(element){
+        let counter = 0;
+        let newRow = undefined;
+        for (let cup in this.trackList){
+            if (counter % 4 === 0) {
+                newRow = document.createElement('div');
+                newRow.classList.add('row');
+                newRow.classList.add('border-left');
+                newRow.classList.add('border-top');
+                element.appendChild(newRow);
+            }
+            const newCup = document.createElement('div');
+            newCup.innerText = cup;
+            newCup.classList.add('col-sm-3');
+            newCup.classList.add('col-md-3');
+            newCup.classList.add('col-lg-3');
+            //newCup.classList.add('border');
+            for (let track in this.trackList[cup]){
+                let newTrack = document.createElement('div');
+                newTrack.id = track;
+                newTrack.classList.add('row');
+                //newTrack.classList.add('border');
+                newCup.appendChild(newTrack);
+                let trackName = document.createElement('div');
+                //trackName.classList.add('border');
+                trackName.classList.add('col');
+                trackName.innerText = track;
+                let time = document.createElement('div');
+                //time.classList.add('border');
+                time.classList.add('col');
+                time.innerText = this.trackList[cup][track];
+                newTrack.appendChild(trackName);
+                newTrack.appendChild(time);
+            }
+            newRow.appendChild(newCup);
+            ++counter;
         }
     }
 }

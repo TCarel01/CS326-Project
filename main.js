@@ -5,6 +5,7 @@ const curReader = new dataReader();
 
 const submit = document.getElementById("submit-button");
 const selectMenu = document.getElementById("track");
+curReader.render(document.getElementById('track-display'));
 
 submit.addEventListener("click", function(event){
     let trackName = document.getElementById("trackInput").value;
