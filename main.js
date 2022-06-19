@@ -6,7 +6,9 @@ const curReader = new dataReader();
 const submit = document.getElementById("submit-button");
 const rivalSubmit = document.getElementById('rival-submit-button');
 const selectMenu = document.getElementById("track");
+const clear = document.getElementById('clear');
 curReader.render(document.getElementById('track-display'));
+
 
 submit.addEventListener("click", function(event){
     let trackName = document.getElementById("trackInput").value;
@@ -58,4 +60,9 @@ file.addEventListener('change', function(event){
         curReader.parseRKG(reader.result);
     }
     reader.readAsBinaryString(file.files[0]);
+});
+
+clear.addEventListener('click', function(event) {
+    curReader.clear();
+    curReader.render(document.getElementById('track-display'));
 });

@@ -33,6 +33,28 @@ export class dataReader {
         window.localStorage.setItem('trackList', JSON.stringify({list: this.trackList}));
     }
 
+    //clears the current trackList and local storage
+    //clear()
+    clear(){
+        this.trackList = {Mushroom: {'Luigi Circuit': {time: null, split1: null, split2: null, split3: null}, "Moo Moo Meadows": {time: null, split1: null, split2: null, split3: null}, 
+                            'Mushroom Gorge': {time: null, split1: null, split2: null, split3: null}, "Toad's Factory": {time: null, split1: null, split2: null, split3: null}},
+                            Flower: {'Mario Circuit': {time: null, split1: null, split2: null, split3: null}, "Coconut Mall": {time: null, split1: null, split2: null, split3: null},
+                             "DK Summit": {time: null, split1: null, split2: null, split3: null}, "Wario's Gold Mine": {time: null, split1: null, split2: null, split3: null}},
+                            Star: {'Daisy Circuit': {time: null, split1: null, split2: null, split3: null}, 'Koopa Cape': {time: null, split1: null, split2: null, split3: null}, 
+                            'Maple Treeway': {time: null, split1: null, split2: null, split3: null}, 'Grumble Volcano': {time: null, split1: null, split2: null, split3: null}},
+                            Special: {'Dry Dry Ruins': {time: null, split1: null, split2: null, split3: null}, 'Moonview Highway': {time: null, split1: null, split2: null, split3: null}, 
+                            "Bowser's Castle": {time: null, split1: null, split2: null, split3: null}, "Rainbow Road": {time: null, split1: null, split2: null, split3: null}},
+                            Shell: {'GCN Peach Beach': {time: null, split1: null, split2: null, split3: null}, 'DS Yoshi Falls': {time: null, split1: null, split2: null, split3: null},
+                             'SNES Ghost Valley 2': {time: null, split1: null, split2: null, split3: null}, 'N64 Mario Raceway': {time: null, split1: null, split2: null, split3: null}},
+                            Banana: {'N64 Sherbet Land': {time: null, split1: null, split2: null, split3: null}, 'GBA Shy Guy Beach': {time: null, split1: null, split2: null, split3: null},
+                             'DS Delfino Square': {time: null, split1: null, split2: null, split3: null}, 'GCN Waluigi Stadium': {time: null, split1: null, split2: null, split3: null}},
+                            Leaf: {'DS Desert Hills': {time: null, split1: null, split2: null, split3: null}, 'GBA Bowser Castle 3': {time: null, split1: null, split2: null, split3: null},
+                             "N64 DK's Jungle Parkway": {time: null, split1: null, split2: null, split3: null}, 'GCN Mario Circuit': {time: null, split1: null, split2: null, split3: null}},
+                            Lightning: {'SNES Mario Circuit 3': {time: null, split1: null, split2: null, split3: null}, 'DS Peach Gardens': {time: null, split1: null, split2: null, split3: null}, 
+                            'GCN DK Mountain': {time: null, split1: null, split2: null, split3: null}, "N64 Bowser's Castle": {time: null, split1: null, split2: null, split3: null}}};
+        window.localStorage.setItem('trackList', JSON.stringify({list: this.trackList}));
+    }
+
 
     //current adds a time to the object with list of playerTimes taking an object as input with certain fields filled in
     //addPlayerTime(input: {track: str, time: str, lap1: str, lap2: str, lap3: str}):
@@ -214,11 +236,13 @@ export class dataReader {
                 trackName.classList.add('border');
                 trackName.classList.add('col');
                 trackName.classList.add('normal-cursor');
+                trackName.classList.add('track-name');
                 trackName.innerText = track;
                 let time = document.createElement('div');
                 time.classList.add('border');
                 time.classList.add('col');
                 time.classList.add('normal-cursor');
+                time.classList.add('time-background');
                 time.innerText = (this.trackList[cup][track].time ? 'Time: ' + this.trackList[cup][track].time + "\u00A0": '') + 
                 (this.trackList[cup][track].split1 ? 'Lap 1: ' + this.trackList[cup][track].split1 + "\u00A0" : '') + 
                 (this.trackList[cup][track].split2 ? 'Lap 2: ' + this.trackList[cup][track].split2 + "\u00A0": '') +
