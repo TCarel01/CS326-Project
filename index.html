@@ -5,7 +5,6 @@
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link rel="stylesheet" href="main.css" />
     </head>
-    <!-- <script type="module" src="data reader.js"></script> -->
     <script type="module" src="main.js"></script>
     <body> 
         <nav class="navbar  navbar-expan-sm navbar-light bg-light">
@@ -17,41 +16,33 @@
         <form>
             <table>
                 <tr>
-                    <td>
-                        <label for="p1Input">Player:</label>
-                        &nbsp;
-                    </td>
-                    <td><label for="trackInput">&nbsp; Track: </label><input type="text" id="trackInput" /></td>
-                    <td><label for="time">&nbsp; Time: </label><input type = "text" id="time" /></td>
-                    <td><label for="split1">&nbsp; Lap 1: &nbsp;</label><input type = "text" id="split1" />&nbsp;</td>
-                    <td><label for="split2">&nbsp; Lap 2: &nbsp;</label><input type = "text" id="split2" />&nbsp;</td>
-                    <td><label for="split3">&nbsp; Lap 3: &nbsp;</label><input type = "text" id="split3" />&nbsp;</td>
+                    <td></td>
+                    <td><label for="trackInput">Track: &nbsp;</label><input type="text" id="trackInput" /></td>
+                    <td><label for="time"> Time: &nbsp;</label><input type = "text" id="time" /></td>
+                    <td><label for="split1"> Lap 1: &nbsp;</label><input type = "text" id="split1" />&nbsp;</td>
+                    <td><label for="split2"> Lap 2: &nbsp;</label><input type = "text" id="split2" />&nbsp;</td>
+                    <td><label for="split3"> Lap 3: &nbsp;</label><input type = "text" id="split3" />&nbsp;</td>
                     <td><input type="button" id="submit-button" value="Submit" /></td>
                     <td><input type="file" id="file" value="Choose Ghost File"/></td>
                 </tr>
                 <tr>
-
                 </tr>
                 <tr>
-                    <td>
-                        <select name="trackCompare" id="track">
-                            <option value="---">---</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for="comparison"> &nbsp; Comparison Ghost: </label><input type="file" id="rivalGhost" value="Rival Ghost File: "></td>
-                    <td><label for='rivalTrackInput'>&nbsp; Track: </label><input type='text' id='rivalTrackInput' /></td>
-                    <td><label for="rivalTime">&nbsp; Time: </label><input type = "text" id="rivalTime" /></td>
-                    <td><label for="rivalSplit1">&nbsp; Lap 1: &nbsp;</label><input type = "text" id="rivalSplit1" />&nbsp;</td>
-                    <td><label for="rivalSplit2">&nbsp; Lap 2: &nbsp;</label><input type = "text" id="rivalSplit2" />&nbsp;</td>
-                    <td><label for="rivalSplit3">&nbsp; Lap 3: &nbsp;</label><input type = "text" id="rivalSplit3" />&nbsp;</td>
+                    <td><label for="comparison"> &nbsp; Comparison Ghost: </label><input type="file" id="rivalGhost" value="Rival Ghost File: " /></td>
+                    <td><label for='rivalTrackInput'> Track: &nbsp;</label><input type='text' id='rivalTrackInput' /></td>
+                    <td><label for="rivalTime"> Time: &nbsp;</label><input type = "text" id="rivalTime" /></td>
+                    <td><label for="rivalSplit1"> Lap 1: &nbsp;</label><input type = "text" id="rivalSplit1" />&nbsp;</td>
+                    <td><label for="rivalSplit2"> Lap 2: &nbsp;</label><input type = "text" id="rivalSplit2" />&nbsp;</td>
+                    <td><label for="rivalSplit3"> Lap 3: &nbsp;</label><input type = "text" id="rivalSplit3" />&nbsp;</td>
                     <td><input type="button" id="rival-submit-button" value="Submit" /></td>
                 </tr>
                 <tr></tr>
                 <tr></tr>
+            </table>
+            <table>
                 <tr>
-                    <td><label for="difference">&nbsp; Difference: </label><input type="text" id="diffOutput" readonly="readonly" size="50"></td>
+                    <td><label for="difference"> Difference: &nbsp;</label><input type="text" id="diffOutput" readonly="readonly" size="50" class="normal-cursor"></td>
+                    <td><input type="button" id="clear" value="Clear" /></td>
                 </tr>
             </table>
         </form>    

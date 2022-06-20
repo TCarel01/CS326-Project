@@ -1,0 +1,28 @@
+.normal-cursor {
+    cursor: default;
+}
+
+
+.track-name {
+    background-color: lightcoral;
+    color: black;
+}
+.slowDifference{
+    color: red;
+}
+
+.fastDifference {
+    color: green;
+}
+
+.neutralDifference {
+    color: black;
+}
+
+.entry {
+    background-color: brown;
+}
+
+.entry:hover {
+    background-color: aqua;
+}
