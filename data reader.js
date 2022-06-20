@@ -53,6 +53,19 @@ export class dataReader {
                             Lightning: {'SNES Mario Circuit 3': {time: null, split1: null, split2: null, split3: null}, 'DS Peach Gardens': {time: null, split1: null, split2: null, split3: null}, 
                             'GCN DK Mountain': {time: null, split1: null, split2: null, split3: null}, "N64 Bowser's Castle": {time: null, split1: null, split2: null, split3: null}}};
         window.localStorage.setItem('trackList', JSON.stringify({list: this.trackList}));
+        document.getElementById('trackInput').value = '';
+        document.getElementById('time').value = '';
+        document.getElementById('split1').value ='';
+        document.getElementById('split2').value = '';
+        document.getElementById('split3').value =  '';
+        document.getElementById('rivalTrackInput').value = '';
+        document.getElementById('rivalTime').value = '';
+        document.getElementById('rivalSplit1').value = '';
+        document.getElementById('rivalSplit2').value = '';
+        document.getElementById('rivalSplit3').value = '';
+        document.getElementById('file').value = null;
+        document.getElementById('rivalGhost').value = null;
+        document.getElementById('diffOutput').value = '';
     }
 
 
@@ -161,18 +174,9 @@ export class dataReader {
         return 'Player does not have a completed time on this track';        
     }
 
-    //inserts a new option to select in the drop down menu, to be called in an eventListener
-    //insertTrack(track: str):
-    insertTrack(track){
-        if (!(track in this.trackList)){
-            let element = document.getElementById("track");
-            element.insertAdjacentHTML("beforeend", "<option value="+ track + ">" + track + "</option>");
-        }
-    }
-
     //reads the standard data from an RKG file
-    //parseRKG(input: Binary String)
-    parseRKG(input){
+    //parseRKG(input: Binary String, type: str)
+    parseRKG(input, type){
         let inputArr = input.split('');
         let relevantData = inputArr.slice(0, 8);
         let fileTypeArr = relevantData.slice(0, 4);
@@ -193,16 +197,24 @@ export class dataReader {
         let totalMinutes = hexArr[4] >> 1;
         let totalSeconds = ((hexArr[4] & 1) << 1) + (hexArr[5] >> 2);
         let totalMS = ((hexArr[5] & 3) << 8) + hexArr[6];
-        document.getElementById('time').value = `${totalMinutes}` + ':' + `${totalSeconds}`.padStart(2, '0') + '.' + `${totalMS}`.padStart(3, '0');
         let track = ((hexArr[7] >> 2) & 63);
-        document.getElementById('trackInput').value = this.trackIDObj[track];
         let l1 = timeParser(hexArr.slice(17, 20));
         let l2 = timeParser(hexArr.slice(20, 23));
         let l3 = timeParser(hexArr.slice(23, 26));
-        document.getElementById('split1').value = l1;
-        document.getElementById('split2').value = l2;
-        document.getElementById('split3').value = l3;
-
+        if (type === 'player'){
+            document.getElementById('time').value = `${totalMinutes}` + ':' + `${totalSeconds}`.padStart(2, '0') + '.' + `${totalMS}`.padStart(3, '0');
+            document.getElementById('trackInput').value = this.trackIDObj[track];
+            document.getElementById('split1').value = l1;
+            document.getElementById('split2').value = l2;
+            document.getElementById('split3').value = l3;
+        }
+        else if (type === 'rival'){
+            document.getElementById('rivalTime').value = `${totalMinutes}` + ':' + `${totalSeconds}`.padStart(2, '0') + '.' + `${totalMS}`.padStart(3, '0');
+            document.getElementById('rivalTrackInput').value = this.trackIDObj[track];
+            document.getElementById('rivalSplit1').value = l1;
+            document.getElementById('rivalSplit2').value = l2;
+            document.getElementById('rivalSplit3').value = l3; 
+        }
     }
 
     //renders all the listed tracks in a grid layout

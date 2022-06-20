@@ -16,11 +16,7 @@ submit.addEventListener("click", function(event){
     let lap1 = document.getElementById('split1').value === "" ? undefined : document.getElementById('split1').value;
     let lap2 = document.getElementById('split2').value === "" ? undefined : document.getElementById('split2').value;
     let lap3 = document.getElementById('split3').value === "" ? undefined : document.getElementById('split3').value;
-    curReader.insertTrack(trackName);
     curReader.addPlayerTime({track: trackName, time: time, lap1: lap1, lap2: lap2, lap3: lap3});
-    if (selectMenu.value === trackName){
-        changeDiff();
-    }
     curReader.render(document.getElementById('track-display'));
 });
 
@@ -34,7 +30,6 @@ rivalSubmit.addEventListener('click', function(event) {
     document.getElementById('diffOutput').value = difference;
 });
 
-selectMenu.addEventListener("change", changeDiff);
 
 function changeDiff() {
     if (selectMenu.value === "---"){
@@ -53,13 +48,23 @@ function changeDiff() {
 
 const file = document.getElementById('file');
 
+const rivalFile = document.getElementById('rivalGhost');
+
 file.addEventListener('change', function(event){
     console.log(file.files);
     const reader = new FileReader();
     reader.onload = function () {
-        curReader.parseRKG(reader.result);
+        curReader.parseRKG(reader.result, 'player');
     }
     reader.readAsBinaryString(file.files[0]);
+});
+
+rivalFile.addEventListener('change', function(event) {
+    const reader = new FileReader();
+    reader.onload = function () {
+        curReader.parseRKG(reader.result, 'rival');
+    }
+    reader.readAsBinaryString(rivalFile.files[0]);
 });
 
 clear.addEventListener('click', function(event) {
