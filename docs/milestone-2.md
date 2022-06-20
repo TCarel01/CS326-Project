@@ -21,7 +21,8 @@ As of now I do not have any idea of what other data interactions to include, but
 # Functionality
 For direct input from the user, I would like to be able to take that text and display it next to the selected track. (eg, Luigi Circuit is selected, it is displayed next to Luigi Circuit.) Times that are input directly from a ghost link or file will parse the ghost file and display the data contained within the file (the format for which data is stored within this file is available on the internet). It will then display these times, and if desired compare them with other top level times at the user's request. 
 
-
+# Video Link
+https://drive.google.com/file/d/1mkCcoF8aLWvsR74MYDQbKq5MTCX3w0Wk/view?usp=sharing
 <html>
     <head>
         <title>html test file</title>
