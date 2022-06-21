@@ -7,16 +7,19 @@
     </head>
     <script type="module" src="main.js"></script>
     <body> 
+        <!--Created a navbar just for the purpose of learning how, may or may not use this in the final application-->
         <nav class="navbar  navbar-expan-sm navbar-light bg-light">
             <div class="h1">Navbar</div>
             <div class="collapse navbar-collapse" id="navbar">
             </div>
         </nav>
+        <!--Container from bootstrap with dynamically added html in data reader.js, represents the actual timesheet-->
         <div class="container" id="track-display"></div>   
         <form>
             <table>
                 <tr>
                     <td></td>
+                    <!--allows for data to be input into the timesheet-->
                     <td><label for="trackInput">Track: &nbsp;</label><input type="text" id="trackInput" /></td>
                     <td><label for="time"> Time: &nbsp;</label><input type = "text" id="time" /></td>
                     <td><label for="split1"> Lap 1: &nbsp;</label><input type = "text" id="split1" />&nbsp;</td>
@@ -28,6 +31,7 @@
                 <tr>
                 </tr>
                 <tr>
+                <!--allows for input of times for comparison feature-->
                     <td><label for="comparison"> &nbsp; Comparison Ghost: </label><input type="file" id="rivalGhost" value="Rival Ghost File: " /></td>
                     <td><label for='rivalTrackInput'> Track: &nbsp;</label><input type='text' id='rivalTrackInput' /></td>
                     <td><label for="rivalTime"> Time: &nbsp;</label><input type = "text" id="rivalTime" /></td>
@@ -41,7 +45,9 @@
             </table>
             <table>
                 <tr>
+                    <!--output for comparison feature-->
                     <td><label for="difference"> Difference: &nbsp;</label><input type="text" id="diffOutput" readonly="readonly" size="50" class="normal-cursor"></td>
+                    <!--clears the entire timesheet-->
                     <td><input type="button" id="clear" value="Clear" /></td>
                 </tr>
             </table>
