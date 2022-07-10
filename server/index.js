@@ -1,5 +1,6 @@
 import express, { response } from 'express';
 import logger from 'morgan';
+import { database } from './database.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -15,7 +16,7 @@ async function initRoutes() {
     app.get('/bestTimes', async (request, response) => {
         try {
             response.writeHead(200, { 'Content-Type': 'application/json' });
-            response.write(JSON.stringify({ 'clear': 'test' }));
+            response.write(JSON.stringify({ 'status': 'success' }));
         }
         catch (error) {
             console.log(error)
@@ -26,6 +27,8 @@ async function initRoutes() {
     //endpoint that creates timesheet
     app.post('/createTimesheet', async (request, response) => {
         try {
+            const contents = request.body;
+            database.saveTimesheet(contents.id, contents.tracklist);
             response.writeHead(200, { 'Content-Type': 'application/json' });
             response.write(JSON.stringify({ 'clear': 'test' }));
         }
@@ -61,6 +64,7 @@ async function initRoutes() {
 }
 
 await initRoutes();
+await database.connect();
 
 app.all('*', async (request, response) => {
     response.status(404).send(`Not found: ${request.path}`);
