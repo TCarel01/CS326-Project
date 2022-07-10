@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import logger from 'morgan';
 
 const app = express();
@@ -11,6 +11,53 @@ app.use('/', express.static('client'));
 
 async function initRoutes() {
 
+    //get times endpoint
+    app.get('/bestTimes', async (request, response) => {
+        try {
+            response.writeHead(200, { 'Content-Type': 'application/json' });
+            response.write(JSON.stringify({ 'clear': 'test' }));
+        }
+        catch (error) {
+            console.log(error)
+        }
+        response.end();
+    });
+
+    //endpoint that creates timesheet
+    app.post('/createTimesheet', async (request, response) => {
+        try {
+            response.writeHead(200, { 'Content-Type': 'application/json' });
+            response.write(JSON.stringify({ 'clear': 'test' }));
+        }
+        catch (error) {
+            console.log(error);
+        }
+        response.end();
+    });
+
+    //endpoint that updates a player's timesheet
+    app.put('/updateTimesheet', async(request, response) => {
+        try {
+            response.writeHead(200, { 'Content-Type': 'application/json' });
+            response.write(JSON.stringify({ 'clear': 'test' }));
+        }
+        catch (error) {
+            console.log(error);
+        }
+        response.end();
+    });
+
+    //removes a player's timesheet from the database
+    app.delete('/removeTimesheet', async(request, response) => {
+        try {
+            response.writeHead(200, { 'Content-Type': 'application/json' });
+            response.write(JSON.stringify({ 'clear': 'test' }));
+        }
+        catch (error) {
+            console.log(error);
+        }
+        response.end();
+    });
 }
 
 await initRoutes();
