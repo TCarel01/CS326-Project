@@ -11,6 +11,7 @@ const clear = document.getElementById('clear');
 const personID = document.getElementById('personID');
 const submitID = document.getElementById('createTimesheetButton');
 const updateID = document.getElementById('updateTimesheetButton');
+const readID = document.getElementById('readTimesheetButton');
 
 curReader.render(document.getElementById('track-display'));
 
@@ -25,15 +26,24 @@ submit.addEventListener("click", function(event){
     curReader.render(document.getElementById('track-display'));
 });
 
-submitID.addEventListener('click', function(event) {
+submitID.addEventListener('click', async function(event) {
     let idVal = personID.value;
-    crud.saveTimeSheet(idVal);
+    await crud.saveTimeSheet(idVal);
 });
 
-updateID.addEventListener('click', function(event) {
+updateID.addEventListener('click', async function(event) {
     let idVal = personID.value;
-    crud.updateTimeSheet(idVal);
-})
+    await crud.updateTimeSheet(idVal);
+});
+
+readID.addEventListener('click', async function(event) {
+    let idVal = personID.value;
+    let timesheetJSON = await crud.readTimeSheet(idVal);
+    if ('timesheet' in timesheetJSON){
+        curReader.trackList = JSON.parse(timesheetJSON.timesheet);
+        curReader.render(document.getElementById('track-display'));
+    }
+});
 
 rivalSubmit.addEventListener('click', function(event) {
     let trackName = document.getElementById('rivalTrackInput').value;

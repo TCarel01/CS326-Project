@@ -62,6 +62,18 @@ export class Database {
   const res = await this.client.query(requestStr, [timesheetStr, id]);
   const rows = res.rows;
  }
+
+
+ /*
+  reads in a player's timesheet from the database
+ */
+ async readTimesheet(id) {
+  const requestStr = 
+  'SELECT * from timesheets WHERE id=$1'
+  const res = await this.client.query(requestStr, [id]);
+  const rows = res.rows;
+  return rows;
+ }
 }
 
 const database = new Database(process.env.DATABASE_URL);

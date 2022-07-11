@@ -13,10 +13,17 @@ app.use('/', express.static('client'));
 async function initRoutes() {
 
     //get times endpoint
-    app.get('/bestTimes', async (request, response) => {
+    app.post('/bestTimes', async (request, response) => {
         try {
+            let contents = request.body;
+            let timesheetjson = await database.readTimesheet(contents.id);
             response.writeHead(200, { 'Content-Type': 'application/json' });
-            response.write(JSON.stringify({ 'clear': 'test' }));
+            if (timesheetjson.length > 0) {
+                response.write(JSON.stringify(timesheetjson[0]));
+            }
+            else {
+                response.write(JSON.stringify({ 'no entry': 'true'}));
+            }
         }
         catch (error) {
             console.log(error)
@@ -28,7 +35,7 @@ async function initRoutes() {
     app.post('/createTimesheet', async (request, response) => {
         try {
             const contents = request.body;
-            database.saveTimesheet(contents.id, contents.tracklist);
+            await database.saveTimesheet(contents.id, contents.tracklist);
             response.writeHead(200, { 'Content-Type': 'application/json' });
             response.write(JSON.stringify({ 'clear': 'test' }));
         }
@@ -42,7 +49,7 @@ async function initRoutes() {
     app.put('/updateTimesheet', async(request, response) => {
         try {
             const contents = request.body;
-            database.updateTimesheet(contents.id, contents.tracklist);
+            await database.updateTimesheet(contents.id, contents.tracklist);
             response.writeHead(200, { 'Content-Type': 'application/json' });
             response.write(JSON.stringify({ 'clear': 'test' }));
         }
