@@ -16,7 +16,7 @@ async function initRoutes() {
     app.get('/bestTimes', async (request, response) => {
         try {
             response.writeHead(200, { 'Content-Type': 'application/json' });
-            response.write(JSON.stringify({ 'status': 'success' }));
+            response.write(JSON.stringify({ 'clear': 'test' }));
         }
         catch (error) {
             console.log(error)
@@ -41,6 +41,8 @@ async function initRoutes() {
     //endpoint that updates a player's timesheet
     app.put('/updateTimesheet', async(request, response) => {
         try {
+            const contents = request.body;
+            database.updateTimesheet(contents.id, contents.tracklist);
             response.writeHead(200, { 'Content-Type': 'application/json' });
             response.write(JSON.stringify({ 'clear': 'test' }));
         }

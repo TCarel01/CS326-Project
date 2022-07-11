@@ -1,14 +1,17 @@
-import { dataReader } from "./data reader.js";
 import { crudObj } from "./crud.js";
+import { dataReader } from "./data reader.js";
 
 const curReader = new dataReader();
-let crud = new crudObj(curReader);
+const crud = new crudObj(curReader);
+
 const submit = document.getElementById("submit-button");
 const rivalSubmit = document.getElementById('rival-submit-button');
 const selectMenu = document.getElementById("track");
 const clear = document.getElementById('clear');
 const personID = document.getElementById('personID');
 const submitID = document.getElementById('createTimesheetButton');
+const updateID = document.getElementById('updateTimesheetButton');
+
 curReader.render(document.getElementById('track-display'));
 
 
@@ -26,6 +29,11 @@ submitID.addEventListener('click', function(event) {
     let idVal = personID.value;
     crud.saveTimeSheet(idVal);
 });
+
+updateID.addEventListener('click', function(event) {
+    let idVal = personID.value;
+    crud.updateTimeSheet(idVal);
+})
 
 rivalSubmit.addEventListener('click', function(event) {
     let trackName = document.getElementById('rivalTrackInput').value;

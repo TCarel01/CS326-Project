@@ -51,6 +51,17 @@ export class Database {
         const responseObj = await this.client.query(statement, [id, timesheetStr]);
     }
   }
+
+  /*
+    Updates the timesheet associated with the player profile
+    updateTimesheet(id: string, timesheet: json)
+  */
+ async updateTimesheet(id, timesheet) {
+  let timesheetStr = JSON.stringify(timesheet);
+  const requestStr = "UPDATE timesheets SET timesheet=$1 WHERE id=$2"
+  const res = await this.client.query(requestStr, [timesheetStr, id]);
+  const rows = res.rows;
+ }
 }
 
 const database = new Database(process.env.DATABASE_URL);
