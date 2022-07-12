@@ -49,7 +49,20 @@ export class crudObj {
             }
         });
         const data = await response.json();
-        return data;
+        let standardsAbbr = {}
+        for (let entry of data) {
+            standardsAbbr[entry.track] = entry.time;
+        }
+        const converterArr = await this.getAbbrebiations();
+        let standardsList = {};
+        for (let entry of converterArr) {
+            standardsList[entry.fullname] = standardsAbbr[entry.abbreviation];
+        }
+        for (let cup in this.dataReader.trackList){
+            for (let trackKey in this.dataReader.trackList[cup]){
+                this.dataReader.trackList[cup][trackKey].time = standardsList[trackKey];
+            }
+        }
     }
 
     async getAbbrebiations() {

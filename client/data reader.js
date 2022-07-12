@@ -1,6 +1,6 @@
 export class dataReader {
 
-    constructor(){
+    constructor(compare){
         this.player1Times = {};
         this.player2Times = {};
         this.trackList = {Mushroom: {'Luigi Circuit': {time: null, split1: null, split2: null, split3: null}, "Moo Moo Meadows": {time: null, split1: null, split2: null, split3: null}, 
@@ -27,10 +27,7 @@ export class dataReader {
                             0x1B: 'N64 Sherbet Land', 0x1F: 'GBA Shy Guy Beach', 0x17: 'DS Delfino Square', 0x12: 'GCN Waluigi Stadium',
                             0x15: 'DS Desert Hills', 0x1E: 'GBA Bowser Castle 3', 0x1D: "N64 DK's Jungle Parkway", 0x11: 'GCN Mario Circuit',
                             0x18: 'SNES Mario Circuit 3', 0x16: 'DS Peach Gardens', 0x13: 'GCN DK Mountain', 0x1C: "N64 Bowser's Castle"};
-        if (window.localStorage.getItem('trackList')){
-            this.trackList = JSON.parse(window.localStorage.getItem('trackList')).list;
-        }
-        window.localStorage.setItem('trackList', JSON.stringify({list: this.trackList}));
+        this.compare = compare;
     }
 
     //clears the current trackList and local storage
@@ -52,7 +49,6 @@ export class dataReader {
                              "N64 DK's Jungle Parkway": {time: null, split1: null, split2: null, split3: null}, 'GCN Mario Circuit': {time: null, split1: null, split2: null, split3: null}},
                             Lightning: {'SNES Mario Circuit 3': {time: null, split1: null, split2: null, split3: null}, 'DS Peach Gardens': {time: null, split1: null, split2: null, split3: null}, 
                             'GCN DK Mountain': {time: null, split1: null, split2: null, split3: null}, "N64 Bowser's Castle": {time: null, split1: null, split2: null, split3: null}}};
-        window.localStorage.setItem('trackList', JSON.stringify({list: this.trackList}));
         document.getElementById('trackInput').value = '';
         document.getElementById('time').value = '';
         document.getElementById('split1').value ='';
@@ -81,7 +77,6 @@ export class dataReader {
                     this.trackList[cup][input.track].split1 = input.lap1;
                     this.trackList[cup][input.track].split2 = input.lap2;
                     this.trackList[cup][input.track].split3 = input.lap3;
-                    window.localStorage.setItem('trackList', JSON.stringify({list: this.trackList}));
                 }
                 else {
                     alert('Please use a valid time format');
@@ -139,28 +134,28 @@ export class dataReader {
 
     //compares two player times and returns a string presenting the time difference between the two players
     //compareTimes(input: {track: string, time: string, lap1: string, lap2: string, lap3: string}): String
-    compareTimes(input){
+    compareTimes(input, elem){
         for (let cup in this.trackList){
             if (input.track in this.trackList[cup]){
-                if (this.trackList[cup][input.track].time === null){
-                    return "Player does not have a completed time on this track";
+                if (input.time === null){
+                    return "N/A";
                 }
                 let p1Time = this.convertStrToMS(this.trackList[cup][input.track].time);
                 let p2Time = this.convertStrToMS(input.time);
                 let timeDifference = p1Time - p2Time;
                 let returnStr = ''
                 if (timeDifference === 0){
-                    document.getElementById('diffOutput').classList.value = 'neutralDifference';
+                    elem.classList.add('neutralDifference');
                     return '0.000';
                 }
                 else if (timeDifference < 0){
-                    returnStr += '-';
+                    returnStr += '+';
                     timeDifference *= -1;
-                    document.getElementById('diffOutput').classList.value = 'fastDifference';
+                    elem.classList.add('slowDifference');
                 }
                 else {
-                    returnStr += "+";
-                    document.getElementById('diffOutput').classList.value = 'slowDifference';
+                    returnStr += "-";
+                    elem.classList.add('fastDifference');
                 }
                 let msDif = Math.floor(timeDifference % 1000);
                 Math.floor(timeDifference /= 1000);
@@ -219,7 +214,7 @@ export class dataReader {
 
     //renders all the listed tracks in a grid layout
     //render(element: document tag): 
-    render(element){
+    render(element, tracks){
         element.innerHTML = '';
         let counter = 0;
         let newRow = undefined;
@@ -261,6 +256,16 @@ export class dataReader {
                 (this.trackList[cup][track].split3 ? 'Lap 3: ' + this.trackList[cup][track].split3 : '');
                 newTrack.appendChild(trackName);
                 newTrack.appendChild(time);
+                if (this.compare) {
+                    let comparisonElement = document.createElement('div');
+                    comparisonElement.classList.add('border');
+                    comparisonElement.classList.add('col');
+                    comparisonElement.classList.add('normal-cursor');
+                    comparisonElement.classList.add('time-background');
+                    let inputJSON = { track: track, time: tracks[cup][track].time };
+                    comparisonElement.innerHTML = this.compareTimes(inputJSON, comparisonElement);
+                    newTrack.appendChild(comparisonElement);
+                }
             }
             newRow.appendChild(newCup);
             ++counter;
