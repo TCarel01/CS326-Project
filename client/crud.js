@@ -51,4 +51,15 @@ export class crudObj {
         const data = await response.json();
         return data;
     }
+
+    async getAbbrebiations() {
+        const response = await fetch('/getConversions', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        return data;
+    }
 }

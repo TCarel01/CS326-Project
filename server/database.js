@@ -58,7 +58,7 @@ export class Database {
   */
  async updateTimesheet(id, timesheet) {
   let timesheetStr = JSON.stringify(timesheet);
-  const requestStr = "UPDATE timesheets SET timesheet=$1 WHERE id=$2"
+  const requestStr = "UPDATE timesheets SET timesheet=$1 WHERE id=$2";
   const res = await this.client.query(requestStr, [timesheetStr, id]);
   const rows = res.rows;
  }
@@ -69,7 +69,7 @@ export class Database {
  */
  async readTimesheet(id) {
   const requestStr = 
-  'SELECT * from timesheets WHERE id=$1'
+  'SELECT * from timesheets WHERE id=$1';
   const res = await this.client.query(requestStr, [id]);
   const rows = res.rows;
   return rows;
@@ -80,11 +80,22 @@ export class Database {
  */
  async getStandards() {
   const reqStr =
-  'SELECT * from targets'
+  'SELECT * from targets';
   const res = await this.client.query(reqStr);
   const rows = res.rows;
   return rows;
  }
+
+ /*
+  gets the conversions for the track abbreviations
+ */
+  async getConversions() {
+    const reqStr =
+    'SELECT * from converter';
+    const res = await this.client.query(reqStr);
+    const rows = res.rows;
+    return rows;
+  }
 }
 
 const database = new Database(process.env.DATABASE_URL);
