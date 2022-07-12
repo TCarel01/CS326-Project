@@ -40,4 +40,15 @@ export class crudObj {
         const data = await response.json();
         return data;
     }
+
+    async getStandards() {
+        const response = await fetch('/getStandards', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        return data;
+    }
 }

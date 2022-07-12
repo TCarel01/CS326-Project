@@ -70,6 +70,19 @@ async function initRoutes() {
         }
         response.end();
     });
+
+    //gets the track standards stored in the database
+    app.get('/getStandards', async(request, response) => {
+        try {
+            let rows = await database.getStandards();
+            response.writeHead(200, {'Content-Type': 'application/json' });
+            response.write(JSON.stringify(rows));
+        }
+        catch (error) {
+            console.log(error);
+        }
+        response.end();
+    });
 }
 
 await initRoutes();

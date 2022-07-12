@@ -74,6 +74,17 @@ export class Database {
   const rows = res.rows;
   return rows;
  }
+
+ /*
+  gets the pre-determined challenge standards
+ */
+ async getStandards() {
+  const reqStr =
+  'SELECT * from targets'
+  const res = await this.client.query(reqStr);
+  const rows = res.rows;
+  return rows;
+ }
 }
 
 const database = new Database(process.env.DATABASE_URL);
