@@ -272,8 +272,3 @@ export class dataReader {
         }
     }
 }
-
-let a = new dataReader();
-console.assert(a.convertStrToMS("1:43.724") === 103724);
-a.addPlayerTime(1, {track: "MH", time: "1:43.724"});
-a.addPlayerTime(2, {track: "MH", time: "1:43.725"});

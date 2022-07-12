@@ -56,6 +56,10 @@ compareButton.addEventListener('click', async function(event) {
         await comparisonCrud.getStandards();
         comparisonReader.render(comparisonDisplay, curReader.trackList);
     }
+    else if (curComparison === 'World Records') {
+        await comparisonCrud.getWRTimes();
+        comparisonReader.render(comparisonDisplay, curReader.trackList);
+    }
 });
 
 // rivalSubmit.addEventListener('click', function(event) {
