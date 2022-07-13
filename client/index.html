@@ -7,16 +7,12 @@
     </head>
     <script type="module" src="main.js"></script>
     <body> 
-        <!--Created a navbar just for the purpose of learning how, may or may not use this in the final application-->
-        <nav class="navbar  navbar-expan-sm navbar-light bg-light">
-            <div class="h1">Navbar</div>
-            <div class="collapse navbar-collapse" id="navbar">
-            </div>
-        </nav>
+        <img src="logo.png" alt="Application logo">
         <!--Container from bootstrap with dynamically added html in data reader.js, represents the actual timesheet-->
         <div class="container" id="track-display"></div>   
         <form>
             <table>
+                <tr></tr>
                 <tr>
                     <td></td>
                     <!--allows for data to be input into the timesheet-->
@@ -28,34 +24,14 @@
                     <td><input type="button" id="submit-button" value="Submit" /></td>
                     <td><input type="file" id="file" value="Choose Ghost File"/></td>
                 </tr>
-                <tr>
-                </tr>
-                <tr>
-                <!--allows for input of times for comparison feature-->
-                    <td><label for="comparison"> &nbsp; Comparison Ghost: </label><input type="file" id="rivalGhost" value="Rival Ghost File: " /></td>
-                    <td><label for='rivalTrackInput'> Track: &nbsp;</label><input type='text' id='rivalTrackInput' /></td>
-                    <td><label for="rivalTime"> Time: &nbsp;</label><input type = "text" id="rivalTime" /></td>
-                    <td><label for="rivalSplit1"> Lap 1: &nbsp;</label><input type = "text" id="rivalSplit1" />&nbsp;</td>
-                    <td><label for="rivalSplit2"> Lap 2: &nbsp;</label><input type = "text" id="rivalSplit2" />&nbsp;</td>
-                    <td><label for="rivalSplit3"> Lap 3: &nbsp;</label><input type = "text" id="rivalSplit3" />&nbsp;</td>
-                    <td><input type="button" id="rival-submit-button" value="Submit" /></td>
-                </tr>
-                <tr></tr>
-                <tr></tr>
-            </table>
-            <table>
-                <tr>
-                    <!--output for comparison feature-->
-                    <td><label for="difference"> Difference: &nbsp;</label><input type="text" id="diffOutput" readonly="readonly" size="50" class="normal-cursor" /></td>
-                    <!--clears the entire timesheet-->
-                    <td><input type="button" id="clear" value="Clear" /></td>
-                </tr>
             </table>
             <table>
                 <tr>
                     <td><label for="createTimesheet"> Player ID: &nbsp;</label><input type="text" id="personID"><input type="button" id="createTimesheetButton" value="Create" /></td>
                     <td><input type="button" id="updateTimesheetButton" value="Update" /></td>
                     <td><input type="button" id="readTimesheetButton" value="Get Timesheet" /></td>
+                    <td><input type="button" id="deleteTimesheetButton" value="Delete" /></td>
+                    <td><input type="button" id="clear" value="Clear" /> </td>
                 </tr>
                 <tr>
                     <td>

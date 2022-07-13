@@ -38,7 +38,7 @@ export class Database {
     Saves the timesheet to the database
     saveTimesheet(id: string, timesheet: json): void
   */
-  async saveTimesheet(id, timesheet) {
+  async saveTimesheet(id, timesheet, password) {
     let timesheetStr = JSON.stringify(timesheet);
     // const requestStr = 
     // 'INSERT INTO timesheets (id, timesheet) VALUES ($1, $2) RETURNING *';
@@ -47,8 +47,8 @@ export class Database {
     const rows = res.rows;
     if (!rows[0].exists){
         const statement = 
-        'INSERT INTO timesheets (id, timesheet) VALUES ($1, $2) RETURNING *';
-        const responseObj = await this.client.query(statement, [id, timesheetStr]);
+        'INSERT INTO timesheets (id, timesheet, password) VALUES ($1, $2, $3) RETURNING *';
+        const responseObj = await this.client.query(statement, [id, timesheetStr, password]);
     }
   }
 
@@ -96,7 +96,19 @@ export class Database {
     const rows = res.rows;
     return rows;
   }
+
+/*
+  deletes a player's timesheet from the database
+*/
+  async deleteTimesheet(id) {
+    const reqStr = 'DELETE FROM timesheets WHERE id=$1';
+    const res = await this.client.query(reqStr, [id]);
+    const rows = res.rows;
+    return rows;
+  }
+
 }
+
 
 const database = new Database(process.env.DATABASE_URL);
 

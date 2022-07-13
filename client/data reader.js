@@ -54,14 +54,7 @@ export class dataReader {
         document.getElementById('split1').value ='';
         document.getElementById('split2').value = '';
         document.getElementById('split3').value =  '';
-        document.getElementById('rivalTrackInput').value = '';
-        document.getElementById('rivalTime').value = '';
-        document.getElementById('rivalSplit1').value = '';
-        document.getElementById('rivalSplit2').value = '';
-        document.getElementById('rivalSplit3').value = '';
         document.getElementById('file').value = null;
-        document.getElementById('rivalGhost').value = null;
-        document.getElementById('diffOutput').value = '';
     }
 
 

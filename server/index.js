@@ -1,6 +1,9 @@
 import express, { response } from 'express';
 import logger from 'morgan';
 import { database } from './database.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+// import { initialize } from 'passport-config.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,6 +14,7 @@ app.use(logger('dev'));
 app.use('/', express.static('client'));
 
 async function initRoutes() {
+
 
     //get times endpoint
     app.post('/bestTimes', async (request, response) => {
@@ -31,11 +35,12 @@ async function initRoutes() {
         response.end();
     });
 
+
     //endpoint that creates timesheet
     app.post('/createTimesheet', async (request, response) => {
         try {
             const contents = request.body;
-            await database.saveTimesheet(contents.id, contents.tracklist);
+            await database.saveTimesheet(contents.id, contents.tracklist, contents.password);
             response.writeHead(200, { 'Content-Type': 'application/json' });
             response.write(JSON.stringify({ 'clear': 'test' }));
         }
@@ -62,6 +67,8 @@ async function initRoutes() {
     //removes a player's timesheet from the database
     app.delete('/removeTimesheet', async(request, response) => {
         try {
+            const contents = request.body;
+            await database.deleteTimesheet(contents.id);
             response.writeHead(200, { 'Content-Type': 'application/json' });
             response.write(JSON.stringify({ 'clear': 'test' }));
         }
@@ -95,6 +102,10 @@ async function initRoutes() {
             console.log(error);
         }
         response.end();
+    });
+
+    app.post('/login', async (request, response) => {
+        
     });
 }
 
